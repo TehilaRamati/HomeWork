@@ -1,3 +1,6 @@
+import operator
+operators = {'+': operator.add, '-': operator.sub, '*': operator.mul, '/': operator.truediv}
+
 
 def replace_formula(curr, arr):
     res = ''
@@ -17,28 +20,12 @@ def replace_formula(curr, arr):
     return res
 
 
-def calculator(action, a, b):
-    # switcher={
-    #     '+': num + = n[j + 1]
-    # }
-    # return switcher.get(num, None)
-    if action == '+':
-        return str(a + b)
-    if action == '-':
-        return str(a - b)
-    if action == '*':
-        return str(a * b)
-    if action == '/':
-        return str(a / b)
-    raise Exception("invalid action")
-
-
 def calc(arr):
     res = ''
     index = 0
     while index < len(arr):
         if not arr[index].isdigit():
-            res = calculator(arr[index], int(res), int(arr[index + 1]))
+            res = str(operators[arr[index]](int(res), int(arr[index + 1])))
             index += 1
         else:
             res = res + arr[index]
@@ -48,14 +35,15 @@ def calc(arr):
 
 def print_list(input_array):
     index = 0
+    new_list = []
     while index < len(input_array):
         print("[{}: {}]".format(index, input_array[index]), end=" ")
+
         index += 1
     print("\n")
 
 
 def prepare_array(input_list):
-
     orgin_list = input_list.copy()
 
     index = 0
